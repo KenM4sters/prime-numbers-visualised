@@ -46,7 +46,7 @@ export default class Particles extends Simulation {
             positions[i3 + 1] = this.cartesianCoordsArray[i2 + 1]
             positions[i3 + 2] = 0
 
-            console.log(positions[i3 + 0], positions[i3 + 1], positions[i3 + 2]);
+            // console.log(positions[i3 + 0], positions[i3 + 1], positions[i3 + 2]);
         }
 
         this.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))

@@ -6,6 +6,9 @@ export default class PolarToCartesian {
         this.bottomLeft = false;
         this.bottomRight = false;
 
+        // scaling everything down by the same factor to avoid huge distances in renderer
+        this.scaleDistances = 0.05
+
         this.cartesianCoord = {}
         this.cartesianCoord.xCoord = 0
         this.cartesianCoord.yCoord = 0
@@ -16,8 +19,8 @@ export default class PolarToCartesian {
         // console.log(polarCoord)
         // console.log(angleDeg);
 
-        this.cartesianCoord.xCoord = polarCoord * Math.cos(angleDeg)
-        this.cartesianCoord.yCoord = polarCoord * Math.sin(angleDeg)
+        this.cartesianCoord.xCoord = polarCoord * Math.cos(angleDeg) * this.scaleDistances
+        this.cartesianCoord.yCoord = polarCoord * Math.sin(angleDeg) * this.scaleDistances
 
         // console.log(this.cartesianCoord.xCoord)
         // console.log(this.cartesianCoord.yCoord)

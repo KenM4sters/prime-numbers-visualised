@@ -29,7 +29,7 @@ export default class Simulation {
         // this.scene.add(this.cube)
         // this.scene.add(this.sphere)
 
-        this.primeNumbers = this.runSimulation(100)
+        this.primeNumbers = this.collectPrimes(10000)
 
         for(let i = 0; i < this.primeNumbers.length; i++) {
 
@@ -42,7 +42,7 @@ export default class Simulation {
          
     }
 
-    runSimulation(n) {
+    collectPrimes(n) {
             // Eratosthenes algorithm to find all primes under n
             var array = [], upperLimit = Math.sqrt(n), output = [];
         
