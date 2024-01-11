@@ -42,10 +42,11 @@ export default class Particles extends Simulation {
         for(let i = 0; i < this.primeNumbers.length; i++) {
             let i2 = i * 2
             let i3 = i * 3
-            positions[i3 + 0] = this.primeNumbers[i2 + 0]
-            positions[i3 + 1] = this.primeNumbers[i2 + 1]
+            positions[i3 + 0] = this.cartesianCoordsArray[i2 + 0]
+            positions[i3 + 1] = this.cartesianCoordsArray[i2 + 1]
             positions[i3 + 2] = 0
 
+            console.log(positions[i3 + 0], positions[i3 + 1], positions[i3 + 2]);
         }
 
         this.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))

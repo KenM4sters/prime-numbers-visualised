@@ -26,8 +26,8 @@ export default class Simulation {
 
 
         // Add to the scene
-        this.scene.add(this.cube)
-        this.scene.add(this.sphere)
+        // this.scene.add(this.cube)
+        // this.scene.add(this.sphere)
 
         this.primeNumbers = this.runSimulation(100)
 
@@ -37,10 +37,7 @@ export default class Simulation {
             this.cartesianCoordsArray.push(this.polar.convertCoords(this.primeNumbers[i]).yCoord)
         }
 
-        
-        for(let i = 0; i < this.cartesianCoordsArray.length; i++) {
-            console.log(this.cartesianCoordsArray[i]);
-        }
+    
 
          
     }
