@@ -29,17 +29,13 @@ export default class Simulation {
         // this.scene.add(this.cube)
         // this.scene.add(this.sphere)
 
-        this.primeNumbers = this.collectPrimes(10000)
+        this.primeNumbers = this.collectPrimes(20000)
 
         for(let i = 0; i < this.primeNumbers.length; i++) {
 
             this.cartesianCoordsArray.push(this.polar.convertCoords(this.primeNumbers[i]).xCoord)
             this.cartesianCoordsArray.push(this.polar.convertCoords(this.primeNumbers[i]).yCoord)
         }
-
-    
-
-         
     }
 
     collectPrimes(n) {

@@ -17,7 +17,7 @@ export default class Particles extends Simulation {
         this.params = {}
         this.params.count = Math.pow(2, 16)
         this.params.perimeterCount = Math.sqrt(this.params.count)
-        this.params.perimeterLength = 100
+        this.params.perimeterLength = 100000
         this.params.size = 0.005
         this.params.color = '#ffffff'
 
@@ -48,6 +48,7 @@ export default class Particles extends Simulation {
 
             // console.log(positions[i3 + 0], positions[i3 + 1], positions[i3 + 2]);
         }
+        console.log(positions.length);
 
         this.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
 
@@ -58,7 +59,7 @@ export default class Particles extends Simulation {
             uniforms:
             {
                 uTime: { value: this.time },
-                uSize: { value: 300 * this.sizes.pixelRatio }
+                uSize: { value: 8 * this.sizes.pixelRatio }
             },    
             vertexShader: particlesVertexShader,
             fragmentShader: particlesFragmentShader
