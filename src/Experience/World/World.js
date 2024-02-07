@@ -10,6 +10,7 @@ export default class World
     constructor()
     {
         this.experience = new Experience()
+        this.time = this.experience.time;
         this.scene = this.experience.scene
         this.resources = this.experience.resources
         this.particles = new Particles()
@@ -24,7 +25,7 @@ export default class World
     }
 
     update() {
-        // this.simulation.cube.position.x += 0.1
+        this.particles.update();
     }
 
 }

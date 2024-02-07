@@ -29,6 +29,21 @@ export default class Particles extends Simulation {
     }
 
     generateParticles() {
+
+        function getRandomData(count, size ){
+            var data = new Float32Array(count * 4)
+            for(let i = 0; i < count * 4; i++) {
+                data[i + 0] = (Math.random() * 2 - 1) * size * 0.5;
+                data[i + 1] = (Math.random() * 2 - 1) * size * 0.5;
+                data[i + 2] = 0;
+                data[i + 3] = 0;
+            }
+
+            return data;
+        }
+
+        const spherePositions = getRandomData(this.params.perimeterLength, 1000);
+        console.log(spherePositions);
         
         if(this.points !== null) {
             this.geometry.dispose()
@@ -51,6 +66,7 @@ export default class Particles extends Simulation {
         console.log(positions.length);
 
         this.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+        this.geometry.setAttribute('spherePosition', new THREE.BufferAttribute(spherePositions, 3))
 
         this.material = new THREE.ShaderMaterial({
             depthWrite: false,
@@ -58,8 +74,8 @@ export default class Particles extends Simulation {
             vertexColors: true,
             uniforms:
             {
-                uTime: { value: this.time },
-                uSize: { value: 8 * this.sizes.pixelRatio }
+                uTime: { value: null},
+                uSize: { value: 5 * this.sizes.pixelRatio }
             },    
             vertexShader: particlesVertexShader,
             fragmentShader: particlesFragmentShader
@@ -67,6 +83,10 @@ export default class Particles extends Simulation {
 
         this.points = new THREE.Points(this.geometry, this.material)
         this.scene.add(this.points)
+    }
 
+    update() {
+        const elapsedTime = this.time.elapsed * 0.001;
+        this.material.uniforms.uTime.value = elapsedTime;
     }
 }
