@@ -3,6 +3,8 @@ import * as THREE from "three"
 import particlesVertexShader from "../Shaders/Particles/particles.vs?raw"
 import particlesFragmentShader from "../Shaders/Particles/particles.fs?raw"
 import Simulation from "./Simulation"
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 
 export default class Particles extends Simulation {
     constructor() {
@@ -25,10 +27,40 @@ export default class Particles extends Simulation {
         this.material = null
         this.points = null
 
-        this.generateParticles()
+        this.shouldUpdate = false;
+
+        this.generateText();
     }
 
-    generateParticles() {
+    generateText() {
+        const loader = new FontLoader();
+        loader.load('fonts/helvetiker_regular.typeface.json', (font) => {
+            const geometry = new TextGeometry( 'Prime Numbers', {
+                font: font,
+                size: 300,
+                height: 100,
+                curveSegments: 100,
+                bevelEnabled: true,
+                bevelThickness: 10,
+                bevelSize: 8,
+                bevelOffset: 0,
+                bevelSegments: 5
+            });
+            const text = new THREE.Mesh(
+                geometry,
+                new THREE.MeshBasicMaterial()
+            )
+            text.position.set(-1250, 0, 0);
+
+            this.shouldUpdate = true;
+            this.generateParticles(text.geometry.attributes.position);
+    
+            // this.scene.add(text);
+        })
+
+    }
+
+    generateParticles(textData) {
 
         function getRandomData(count, size ){
             var data = new Float32Array(count * 4)
@@ -43,16 +75,16 @@ export default class Particles extends Simulation {
         }
 
         const spherePositions = getRandomData(this.params.perimeterLength, 1000);
-        console.log(spherePositions);
+        // console.log(spherePositions);
         
         if(this.points !== null) {
-            this.geometry.dispose()
-            this.material.dispose()
-            this.scene.remove(this.points)
+            this.geometry.dispose();
+            this.material.dispose();
+            this.scene.remove(this.points);
         }
 
-        this.geometry = new THREE.BufferGeometry()
-        const positions = new Float32Array(this.params.count * 3)
+        this.geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(this.params.count * 3);
 
         for(let i = 0; i < this.primeNumbers.length; i++) {
             let i2 = i * 2
@@ -63,7 +95,7 @@ export default class Particles extends Simulation {
 
             // console.log(positions[i3 + 0], positions[i3 + 1], positions[i3 + 2]);
         }
-        console.log(positions.length);
+        // console.log(positions.length);
 
         this.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
         this.geometry.setAttribute('spherePosition', new THREE.BufferAttribute(spherePositions, 3))
@@ -86,7 +118,9 @@ export default class Particles extends Simulation {
     }
 
     update() {
-        const elapsedTime = this.time.elapsed * 0.001;
-        this.material.uniforms.uTime.value = elapsedTime;
+        if(this.shouldUpdate) {
+            const elapsedTime = this.time.elapsed * 0.001;
+            this.material.uniforms.uTime.value = elapsedTime;
+        }
     }
 }
